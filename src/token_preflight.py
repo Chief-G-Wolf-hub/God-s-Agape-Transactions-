@@ -7,7 +7,8 @@ from urllib.request import Request, urlopen
 
 from token_plan import SYMBOL_RE
 
-RPC = "https://testnet-api.xprnetwork.org"
+RPC = "https://testnet.protonchain.com"
+TESTNET_CHAIN_ID = "71ee83bcf52142d61019d95f9cc5427ba6a0d7ff8accd9e2088ae2abeaf3d3dd"
 ACCOUNT_NAME = re.compile(r"[a-z1-5.]{1,12}\Z")
 
 
@@ -27,6 +28,8 @@ def lookup(contract, symbol):
     if not SYMBOL_RE.fullmatch(symbol):
         raise ValueError("Enter a token symbol of 1–7 uppercase letters.")
     info = rpc_read("get_info", {})
+    if info.get("chain_id") != TESTNET_CHAIN_ID:
+        raise ValueError("The RPC did not report the expected XPR testnet chain ID.")
     account = rpc_read("get_account", {"account_name": contract})
     if account.get("account_name") != contract:
         raise ValueError("The RPC did not confirm the requested contract account.")

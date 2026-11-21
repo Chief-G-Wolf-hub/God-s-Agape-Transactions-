@@ -58,3 +58,15 @@ and maximum supply. `no_stat_row` means the lookup returned no row for that
 contract and symbol. Confirm the contract uses the expected token table and
 verify signer authority separately before creating or issuing. Treat any failed
 RPC lookup as unknown. The reported supply is issued supply from the stat table.
+
+## WebAuth Wallet target
+
+Start with **XPR Network Testnet** in WebAuth Wallet. The factory currently
+produces review plans and reads the testnet RPC. A future wallet handoff must
+verify the XPR testnet chain ID and selected signer before presenting separate
+create and issue approvals, and record each confirmed transaction ID.
+
+The wallet's Metal Testnet, Metal L2 Testnet, Sepolia ETH, Sepolia OP and
+XRP Ledger Testnet entries are separate integration targets. Each needs its own
+transaction preparation, signing and confirmation tests. Wallet network
+visibility alone does not establish app signing compatibility.
