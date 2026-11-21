@@ -1,0 +1,11 @@
+{
+  "chain": "proton-test",
+  "contract_account": "gwtesttoken",
+  "issuer": "gwtesttoken",
+  "initial_recipient": "gwtesttoken",
+  "symbol": "GWTEST",
+  "precision": 4,
+  "maximum_supply": "1000000",
+  "initial_issue": "100000",
+  "ram_bytes": 200000
+}

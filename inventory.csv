@@ -1,0 +1,13 @@
+symbol,contract_account,precision,maximum_supply,on_chain_status,notes
+GWOLF,,,,unverified,Existing ecosystem token; verify issuer contract and chain before code changes
+LOVE,,,,unverified,Existing ecosystem token; confirm contract and liquidity pools
+CASHBOX,,,,unverified,Existing ecosystem token; confirm unique symbol under contract
+JUSTICE,,,,unverified,Existing ecosystem token; confirm contract and governance
+IAM,,,,unverified,Existing ecosystem token; treasury candidate; verify existing Alcor assets
+AGCR,,,,unverified,Existing ecosystem token
+AGAPE,,,,unverified,Existing ecosystem token
+XAIS,,,,unverified,Proposed BlastPad/XPR token; check earlier minting
+LEVY,,,,unverified,Existing ecosystem token
+SPRK,,9,999999999.999999999,unverified,Prior proposal only; verify precision and contract support
+XAP,,4,1000000000.0000,unverified,Prior proposal only; verify no deployment
+DOVE,,,,unverified,Prior Alcor activity reported; do not recreate
