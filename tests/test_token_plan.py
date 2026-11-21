@@ -15,8 +15,8 @@ class PlanTests(unittest.TestCase):
     def test_dry_run_has_no_executable_mutations(self):
         lines = build_plan(BASE)
         executable = [x for x in lines if not x.startswith("#")]
-        self.assertTrue(any("proton chain:set proton-test" == x for x in executable))
-        self.assertFalse(any(" contract:set " in x or " issue " in x or " create " in x for x in executable))
+        self.assertEqual(executable, [])
+        self.assertIn("# proton chain:set proton-test", lines)
         self.assertTrue(any("1000000.0000 GWTEST" in x for x in lines))
 
     def test_reject_mainnet(self):

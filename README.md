@@ -22,6 +22,12 @@ python3 -m unittest discover -s tests -v
 
 No Python dependencies are needed beyond the standard library.
 
+## Warehouse and factory integration
+
+Run `python3 src/token_inventory.py` to export the warehouse inventory as a JSON array. Each entry has `symbol`, `contract_account`, `precision`, `maximum_supply`, `on_chain_status` and `notes`. Blank fields become JSON `null`. Precision is an integer and maximum supply is a decimal string so apps can preserve every digit. The status comes from the CSV and still requires on-chain verification.
+
+The factory can call `src.token_plan.build_plan(config)` using the fields in `examples/gwtest.json`. Render the returned lines as review text. Every command, including the CLI network selection, is commented out.
+
 ## Verify before deployment
 
 1. Record each existing token's actual `contract_account`, chain, precision, issuer, maximum supply and current supply. Record chain explorers/transaction IDs as evidence.
@@ -33,3 +39,10 @@ No Python dependencies are needed beyond the standard library.
 **GitHub `main` is source control; XPR mainnet is a production blockchain.** Merging this repository cannot by itself create or change a token on XPR Network.
 
 Official references: [Create a Token](https://docs.xprnetwork.org/guides/create-token.html) · [CLI commands](https://docs.xprnetwork.org/cli/usage) · [Standard token source](https://github.com/XPRNetwork/ts-smart-contracts/tree/main/external/xtokens)
+
+## Run the app
+
+From the repository root, run `python3 src/app.py` and open
+[http://127.0.0.1:8000](http://127.0.0.1:8000). Use `--port` to choose another
+local port. The warehouse displays and filters the CSV inventory. The factory
+accepts a testnet configuration and displays the review plan as text.

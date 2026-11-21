@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>God’s Agape Transactions</title>
+  <link rel="stylesheet" href="/style.css">
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <header><div class="wrap"><span>God’s Agape Transactions</span>
+    <nav aria-label="Sections"><a href="#warehouse">Warehouse</a><a href="#factory">Factory</a></nav>
+  </div></header>
+  <main class="wrap">
+    <section id="warehouse">
+      <h1>Token warehouse</h1>
+      <p>Recorded XPR assets and their on-chain verification status.</p>
+      <label for="search">Filter by symbol or contract</label>
+      <input id="search" type="search" autocomplete="off">
+      <p id="inventory-status" role="status">Loading inventory…</p>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Token inventory">
+        <table>
+          <thead><tr><th scope="col">Symbol</th><th scope="col">Contract</th><th scope="col">Precision</th><th scope="col">Maximum supply</th><th scope="col">Status</th><th scope="col">Notes</th></tr></thead>
+          <tbody id="inventory"></tbody>
+        </table>
+      </div>
+    </section>
+    <section id="factory">
+      <h2>Token factory</h2>
+      <p>Generate a review plan for XPR testnet. The form starts with a hypothetical example.</p>
+      <form id="factory-form">
+        <label>Contract and issuer<input name="contract_account" value="gwtesttoken" required pattern="[a-z1-5]{4,12}"></label>
+        <label>Initial recipient<input name="initial_recipient" value="gwtesttoken" required pattern="[a-z1-5]{4,12}"></label>
+        <label>Symbol<input name="symbol" value="GWTEST" required pattern="[A-Z]{1,7}"></label>
+        <label>Precision<input name="precision" type="number" min="0" max="18" value="4" required></label>
+        <label>Maximum supply<input name="maximum_supply" inputmode="decimal" value="1000000.0000" required></label>
+        <label>Initial issue<input name="initial_issue" inputmode="decimal" value="100000.0000" required></label>
+        <button type="submit">Generate review plan</button>
+      </form>
+      <p id="plan-status" role="status"></p>
+      <pre id="plan" tabindex="0" aria-label="Generated review plan" hidden></pre>
+    </section>
+  </main>
+</body>
+</html>
