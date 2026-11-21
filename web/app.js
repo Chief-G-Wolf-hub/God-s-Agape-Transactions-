@@ -42,6 +42,9 @@ const form = document.querySelector("#factory-form");
 const submit = form.querySelector("button");
 const planStatus = document.querySelector("#plan-status");
 const plan = document.querySelector("#plan");
+const inventoryReview = document.querySelector("#inventory-review");
+const downloadPlan = document.querySelector("#download-plan");
+
 form.addEventListener("submit", async event => {
   event.preventDefault();
   const config = Object.fromEntries(new FormData(form));
@@ -50,6 +53,12 @@ form.addEventListener("submit", async event => {
   config.issuer = config.contract_account;
   submit.disabled = true;
   plan.hidden = true;
+  inventoryReview.hidden = true;
+  downloadPlan.hidden = true;
+  if (downloadPlan.hasAttribute("href")) {
+    URL.revokeObjectURL(downloadPlan.href);
+    downloadPlan.removeAttribute("href");
+  }
   planStatus.textContent = "Generating review plan…";
   try {
     const result = await fetchJson("/api/plan", {
@@ -57,7 +66,15 @@ form.addEventListener("submit", async event => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(config),
     });
+    const matchCount = result.inventory_matches.length;
+    inventoryReview.textContent = matchCount
+      ? `Warehouse records with symbol ${config.symbol}: ${matchCount}. Verify the chain, contract and issuer before creating or issuing.`
+      : "No matching symbol in the warehouse. Check XPR testnet to confirm token availability.";
+    inventoryReview.hidden = false;
     plan.textContent = result.plan;
+    const reviewText = `# ${inventoryReview.textContent}\n${result.plan}\n`;
+    downloadPlan.href = URL.createObjectURL(new Blob([reviewText], { type: "text/plain" }));
+    downloadPlan.hidden = false;
     plan.hidden = false;
     planStatus.textContent = "Review plan generated.";
   } catch (error) {

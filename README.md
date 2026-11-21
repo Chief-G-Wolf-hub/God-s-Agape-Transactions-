@@ -45,4 +45,6 @@ Official references: [Create a Token](https://docs.xprnetwork.org/guides/create-
 From the repository root, run `python3 src/app.py` and open
 [http://127.0.0.1:8000](http://127.0.0.1:8000). Use `--port` to choose another
 local port. The warehouse displays and filters the CSV inventory. The factory
-accepts a testnet configuration and displays the review plan as text.
+accepts a testnet configuration, flags symbols already recorded in the warehouse,
+and lets you download a text review plan. Verify chain, contract and issuer
+identity before any creation or issuance, including for symbols with no local match.

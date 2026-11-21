@@ -64,7 +64,15 @@ class AppHandler(BaseHTTPRequestHandler):
         except ValueError:
             self.respond_json(400, {"error": "Expected a JSON configuration object of up to 16 KiB."})
             return
-        self.respond_json(200, {"plan": "\n".join(lines)})
+        try:
+            matches = [
+                token for token in load_inventory()
+                if token["symbol"] == config["symbol"]
+            ]
+        except (OSError, ValueError, csv.Error):
+            self.respond_json(500, {"error": "The warehouse inventory could not be checked."})
+            return
+        self.respond_json(200, {"plan": "\n".join(lines), "inventory_matches": matches})
 
 
 if __name__ == "__main__":
