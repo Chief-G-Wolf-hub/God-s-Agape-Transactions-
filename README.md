@@ -48,3 +48,13 @@ local port. The warehouse displays and filters the CSV inventory. The factory
 accepts a testnet configuration, flags symbols already recorded in the warehouse,
 and lets you download a text review plan. Verify chain, contract and issuer
 identity before any creation or issuance, including for symbols with no local match.
+
+## Read-only testnet preflight
+
+Run `python3 src/token_preflight.py CONTRACT SYMBOL` to check a known contract
+account on the XPR testnet RPC. The JSON output reports the observed chain ID,
+head block, and any standard token stat row, including issuer, precision, supply
+and maximum supply. `no_stat_row` means the lookup returned no row for that
+contract and symbol. Confirm the contract uses the expected token table and
+verify signer authority separately before creating or issuing. Treat any failed
+RPC lookup as unknown. The reported supply is issued supply from the stat table.
