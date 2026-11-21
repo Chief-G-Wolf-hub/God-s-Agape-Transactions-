@@ -85,3 +85,61 @@ form.addEventListener("submit", async event => {
 });
 
 showInventory();
+
+const walletButton = document.querySelector("#connect-wallet");
+const walletStatus = document.querySelector("#wallet-status");
+const walletRpc = "https://rpc.api.testnet.metalx.com";
+const xprTestnetId = "71ee83bcf52142d61019d95f9cc5427ba6a0d7ff8accd9e2088ae2abeaf3d3dd";
+const appAccount = "tokenfactory";
+let walletSdk;
+
+function loadWalletSdk() {
+  if (!walletSdk) {
+    walletSdk = new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = "https://unpkg.com/@proton/web-sdk@5.1.0/lib/proton-web-sdk.bundle.js";
+      script.integrity = "sha384-5XX6/myWSFmrVjyfcVWcXOvXilMksXwCPBMcdsk3/u0MmWE4fIF3iW+l/5MJsAl/";
+      script.crossOrigin = "anonymous";
+      script.onload = resolve;
+      script.onerror = () => {
+        script.remove();
+        walletSdk = undefined;
+        reject(new Error("The WebAuth SDK could not be loaded."));
+      };
+      document.head.append(script);
+    });
+  }
+  return walletSdk;
+}
+
+walletButton.addEventListener("click", async () => {
+  walletButton.disabled = true;
+  walletStatus.textContent = "Open WebAuth and approve the XPR Testnet account connection.";
+  try {
+    await loadWalletSdk();
+    const { session, link } = await window.ProtonWebSDK({
+      linkOptions: {
+        endpoints: [walletRpc],
+        chainId: xprTestnetId,
+        restoreSession: false,
+        storagePrefix: "token-factory-xpr-testnet",
+      },
+      transportOptions: { requestAccount: appAccount },
+      selectorOptions: { walletType: "webauth", enabledWalletTypes: ["webauth"] },
+    });
+    if (!session || !link) {
+      throw new Error("WebAuth did not return a wallet session.");
+    }
+    const actor = String(session.auth.actor);
+    const chainId = String(session.chainId);
+    await link.removeSession(appAccount, session.auth, session.chainId);
+    if (chainId !== xprTestnetId || !/^[a-z1-5.]{1,12}$/.test(actor)) {
+      throw new Error("WebAuth did not confirm an XPR Testnet account.");
+    }
+    walletStatus.textContent = `Verified wallet account: ${actor} on XPR Testnet.`;
+  } catch (error) {
+    walletStatus.textContent = error.message || "WebAuth connection did not complete.";
+  } finally {
+    walletButton.disabled = false;
+  }
+});

@@ -28,6 +28,8 @@
     <section id="factory">
       <h2>Token factory</h2>
       <p>Generate a review plan for XPR testnet. The form starts with a hypothetical example.</p>
+      <button type="button" id="connect-wallet">Connect WebAuth on XPR Testnet</button>
+      <p id="wallet-status" role="status"></p>
       <form id="factory-form">
         <label>Contract and issuer<input name="contract_account" value="gwtesttoken" required pattern="[a-z1-5]{4,12}"></label>
         <label>Initial recipient<input name="initial_recipient" value="gwtesttoken" required pattern="[a-z1-5]{4,12}"></label>

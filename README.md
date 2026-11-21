@@ -70,3 +70,9 @@ The wallet's Metal Testnet, Metal L2 Testnet, Sepolia ETH, Sepolia OP and
 XRP Ledger Testnet entries are separate integration targets. Each needs its own
 transaction preparation, signing and confirmation tests. Wallet network
 visibility alone does not establish app signing compatibility.
+
+The Factory's **Connect WebAuth on XPR Testnet** button requests a wallet
+identity via the pinned Proton Web SDK. It displays the returned account only
+for the expected testnet chain ID and closes the saved SDK session after the
+identity check. Test the flow in a browser with WebAuth available. Use only
+a testnet wallet account you control.
